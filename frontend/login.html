@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin CMS</title>
+    <style>
+        body {
+            background-color: #fff5f8;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.1);
+            border: 2px solid deeppink;
+            text-align: center;
+            width: 300px;
+        }
+        h2 { color: deeppink; margin-bottom: 20px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box; 
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: deeppink;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #ff1493; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+    <h2>Login CMS</h2>
+    <input type="text" id="user" placeholder="Username (admin)">
+    <input type="password" id="pass" placeholder="Password (123)">
+    <button onclick="auth()">Login</button>
+    <p style="font-size: 12px; margin-top: 15px;"><a href="profile/profile.html" style="color: gray; text-decoration: none;">← Kembali ke Profil</a></p>
+    </div>
+
+    <script>
+    function auth() {
+    const u = document.getElementById('user').value;
+    const p = document.getElementById('pass').value;
+
+    if(u === "admin" && p === "123") {
+        localStorage.setItem("isLoggedIn", "true");
+        // Diarahkan ke index.html yang sudah berisi profil + cms
+        window.location.href = "index.html"; 
+    } else {
+        alert("Akses Ditolak! Gunakan admin / 123");
+    }
+}
+</script>
+</body>
+</html>

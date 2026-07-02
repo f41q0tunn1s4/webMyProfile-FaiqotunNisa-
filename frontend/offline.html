@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koneksi Terputus - CMS Profil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5A626A;
+            --pink-accent: #deeppink;
+            --bg-light: #F4F6F9;
+            --text-dark: #2D3136;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-dark);
+            padding: 20px;
+        }
+        .offline-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #E2E8F0;
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .icon-container {
+            font-size: 64px;
+            color: var(--pink-accent);
+            margin-bottom: 24px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.08);
+                opacity: 0.8;
+            }
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1E293B;
+            margin-bottom: 12px;
+        }
+        p {
+            font-size: 14px;
+            color: #64748B;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .btn-retry {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(90, 98, 106, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-retry:hover {
+            background: #334155;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(51, 65, 85, 0.3);
+        }
+        .btn-retry:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-card">
+        <div class="icon-container">
+            <i class="fa-solid fa-wifi-slash"></i>
+        </div>
+        <h1>Koneksi Internet Terputus</h1>
+        <p>Aplikasi tidak dapat terhubung ke jaringan. Namun jangan khawatir, shell aplikasi ini telah tersimpan secara offline oleh Service Worker kami. Silakan periksa koneksi internet Anda dan coba lagi.</p>
+        <button class="btn-retry" onclick="window.location.reload()">
+            <i class="fa-solid fa-rotate-right"></i> Muat Ulang Halaman
+        </button>
+    </div>
+</body>
+</html>
