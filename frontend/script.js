@@ -11,8 +11,18 @@ if (localStorage.getItem("isLoggedIn") !== "true") {
 
 function logout() {
     localStorage.removeItem("isLoggedIn");
-    window.location.href = "login.html";
+
+    // Stabil untuk GitHub Pages (terutama ketika folder saat ini berbeda: /profile/ vs root /frontend/).
+    const path = window.location.pathname;
+    if (path.includes('/profile/')) {
+        // Berada di frontend/profile/
+        window.location.href = '../login.html';
+    } else {
+        // Berada di frontend/ atau root dashboard
+        window.location.href = './login.html';
+    }
 }
+
 
 const logoutBtn = document.querySelector('.logout-btn');
 if (logoutBtn) {
