@@ -4,57 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Profil & CMS - Faiqotun Nisa</title>
-    <!-- Font Poppins -->
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Font Awesome untuk Ikon Menu Sidebar -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Leaflet.js CSS & JS (Praktikum 4) -->
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
+
+    <!-- React CDN + Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
 
-    <!-- Web App Manifest agar website bisa di-install ke HP/Laptop -->
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#089182" />
 
-    <!-- Pengaturan Tambahan Khusus iOS/Safari -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="ProfilKu" />
-    
+
     <style>
         :root {
-            /* Perubahan Palet Warna ke Silver & Putih Kontemporer */
-            --primary: #5A626A;        /* Slate Gray / Silver Tua untuk aksen tekstual */
+            --primary: #5A626A;
             --pink-accent: #deeppink;
-            --bg-light: #F4F6F9;       /* Background utama putih abu-abu bersih */
+            --bg-light: #F4F6F9;
             --text-dark: #2D3136;
-            --sidebar-silver: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%); /* Gradasi Silver Premium */
+            --sidebar-silver: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--bg-light); display: flex; height: 100vh; overflow: hidden; }
 
-        /* SIDEBAR BARU: Menggunakan Nuansa Silver & Putih */
         .sidebar {
-            width: 290px; 
-            background: var(--sidebar-silver); 
-            color: #334155; /* Teks abu-abu gelap agar kontras dengan background silver */
-            padding: 35px 22px; 
-            display: flex; 
+            width: 290px;
+            background: var(--sidebar-silver);
+            color: #334155;
+            padding: 35px 22px;
+            display: flex;
             flex-direction: column;
-            border-top-right-radius: 30px; 
+            border-top-right-radius: 30px;
             border-bottom-right-radius: 30px;
             box-shadow: 4px 0 20px rgba(0,0,0,0.06);
             position: relative;
         }
 
-        /* Rebranding Header: Menggunakan nama Content Management System */
-        .brand { 
-            font-size: 15px; 
-            font-weight: 600; 
-            margin-bottom: 35px; 
+        .brand {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 35px;
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
@@ -68,30 +67,27 @@
 
         .nav-links { list-style: none; flex-grow: 1; }
         .nav-links li { margin-bottom: 10px; }
-        
-        /* Styling Link Menu pada Latar Belakang Silver */
-        .nav-links li a { 
-            display: flex; 
+
+        .nav-links li a {
+            display: flex;
             align-items: center;
             gap: 14px;
-            padding: 12px 16px; 
-            color: #475569; 
-            text-decoration: none; 
+            padding: 12px 16px;
+            color: #475569;
+            text-decoration: none;
             font-size: 13.5px;
             font-weight: 500;
             border-radius: 12px;
-            transition: all 0.25s ease; 
+            transition: all 0.25s ease;
         }
         .nav-links li a i { font-size: 15px; width: 20px; text-align: center; }
-        
-        /* Efek Hover State */
-        .nav-links li a:hover { 
-            background: rgba(255, 255, 255, 0.5); 
-            color: #0F172A; 
+
+        .nav-links li a:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: #0F172A;
             transform: translateX(4px);
         }
-        
-        /* Efek Active State (Menu yang sedang dibuka menggunakan warna Putih Bersih) */
+
         .nav-links li.active a {
             background: #ffffff;
             color: #0F172A;
@@ -100,15 +96,15 @@
         }
         .nav-links li.active a i { color: var(--pink-accent); }
 
-        .logout-btn { 
-            background: #ffffff; 
-            border: 1px solid #CBD5E1; 
-            padding: 12px; 
-            color: #EF4444; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            margin-top: 20px; 
+        .logout-btn {
+            background: #ffffff;
+            border: 1px solid #CBD5E1;
+            padding: 12px;
+            color: #EF4444;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -119,7 +115,6 @@
         }
         .logout-btn:hover { background: #EF4444; color: white; border-color: #EF4444; }
 
-        /* KONTEN UTAMA SPA */
         .main-wrapper { flex-grow: 1; padding: 35px; overflow-y: auto; }
         .spa-page { display: none; }
         .spa-page.active-page { display: block; animation: fadeIn 0.3s ease-in-out; }
@@ -129,11 +124,24 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Komponen Kartu Putih */
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 18px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #E2E8F0; }
-        h2, h3 { color: #334155; margin-bottom: 15px; font-size: 17px; border-bottom: 2px solid #F1F5F9; padding-bottom: 8px; font-weight: 600; }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.03);
+            margin-bottom: 25px;
+            border: 1px solid #E2E8F0;
+        }
 
-        /* Profile Header */
+        h2, h3 {
+            color: #334155;
+            margin-bottom: 15px;
+            font-size: 17px;
+            border-bottom: 2px solid #F1F5F9;
+            padding-bottom: 8px;
+            font-weight: 600;
+        }
+
         .profile-header { display: flex; gap: 50px; align-items: center; border-left: 6px solid var(--pink-accent); }
         .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #E2E8F0; object-fit: cover; }
         .profile-text h1 { color: #1E293B; font-size: 22px; }
@@ -142,77 +150,90 @@
         .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
         .info-card ul, .info-card ol { padding-left: 18px; font-size: 13px; color: #475569; line-height: 1.8; }
         .info-card a { color: #3b82f6; text-decoration: none; font-weight: 500; }
-        
-        .fav-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .fav-table th, .fav-table td { padding: 10px; border-bottom: 1px solid #F1F5F9; text-align: left; }
-        .fav-table th { color: var(--pink-accent); font-weight: 600; }
 
-        #form-artikel input, #form-artikel textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #E2E8F0; border-radius: 10px; background: #FAFAFA; outline: none; font-size: 13px; }
-        #form-artikel input:focus, #form-artikel textarea:focus { border-color: #94A3B8; background: #fff; }
-        #save-btn { background: #475569; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 13px; }
+        #form-artikel input, #form-artikel textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            background: #FAFAFA;
+            outline: none;
+            font-size: 13px;
+        }
+        #form-artikel input:focus, #form-artikel textarea:focus {
+            border-color: #94A3B8;
+            background: #fff;
+        }
+
+        #save-btn {
+            background: #475569;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            font-size: 13px;
+        }
         #save-btn:hover { background: #334155; }
 
         .contact-grid { display: flex; flex-direction: column; gap: 15px; }
         .form-group-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .form-group { display: flex; flex-direction: column; gap: 5px; }
         .form-group label { font-size: 12.5px; font-weight: 600; color: #64748B; }
-        .form-group input, .form-group textarea { padding: 12px; border: 1px solid #E2E8F0; border-radius: 10px; font-size: 13px; background: #FAFAFA; outline: none; }
-        .form-group input:focus, .form-group textarea:focus { border-color: #94A3B8; background: #fff; }
-        
-        .btn-submit { 
-            background: #475569; color: #ffffff; border: none; padding: 12px 35px; border-radius: 10px; 
-            font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; align-self: flex-start;
+        .form-group input, .form-group textarea {
+            padding: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 13px;
+            background: #FAFAFA;
+            outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #94A3B8;
+            background: #fff;
+        }
+
+        .btn-submit {
+            background: #475569;
+            color: #ffffff;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            align-self: flex-start;
             margin-top: 5px;
         }
         .btn-submit:hover { background: #334155; }
 
-        .article-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        .article-table th { text-align: left; font-size: 12px; color: #64748B; padding: 12px 10px; border-bottom: 2px solid #E2E8F0; font-weight: 600; }
-        .article-table td { padding: 14px 10px; font-size: 13px; border-bottom: 1px solid #F1F5F9; color: #334155; }
-
-        /* Cluster Marker Pin CSS (Challenge 1) */
-        .map-cluster-pin {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        #react-artikel-root table { width: 100%; border-collapse: collapse; }
+        #react-artikel-root th { text-align: left; font-size: 12px; color: #64748B; padding: 12px 10px; border-bottom: 2px solid #E2E8F0; font-weight: 600; }
+        #react-artikel-root td { padding: 14px 10px; font-size: 13px; border-bottom: 1px solid #F1F5F9; color: #334155; }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR: Silver Palette dengan Menu Berdasarkan Struktur File Nyata -->
     <aside class="sidebar">
-        <div class="brand">
-            <i class="fa-solid fa-sliders"></i> Content Management System
-        </div>
+        <div class="brand"><i class="fa-solid fa-sliders"></i> Content Management System</div>
         <ul class="nav-links">
-            <li class="nav-item active" data-target="page-dashboard">
-                <a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard Overview</a>
-            </li>
-            <!-- Mengarahkan ke file profile.html di dalam folder profile -->
-            <li class="nav-item">
-                <a href="profile/profile.html"><i class="fa-solid fa-user-gear"></i> Lihat Profil Web</a>
-            </li>
-            <li class="nav-item" data-target="page-tambah-artikel">
-                <a href="#"><i class="fa-solid fa-camera-retro"></i> Manajemen Artikel</a>
-            </li>
-            <li class="nav-item" data-target="page-riwayat">
-                <a href="#"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Artikel</a>
-            </li>
-            <li class="nav-item" data-target="page-peta">
-                <a href="#"><i class="fa-solid fa-map-location-dot"></i> Peta Artikel</a>
-            </li>
+            <li class="nav-item active" data-target="page-dashboard"><a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard Overview</a></li>
+            <li class="nav-item"><a href="profile/profile.html"><i class="fa-solid fa-user-gear"></i> Lihat Profil Web</a></li>
+            <li class="nav-item" data-target="page-tambah-artikel"><a href="#"><i class="fa-solid fa-camera-retro"></i> Manajemen Artikel</a></li>
+            <li class="nav-item" data-target="page-riwayat"><a href="#"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Artikel</a></li>
+            <li class="nav-item" data-target="page-peta"><a href="#"><i class="fa-solid fa-map-location-dot"></i> Peta Artikel</a></li>
         </ul>
-        
-        <!-- Tombol Aktifkan Notifikasi (Praktikum 10) -->
-        <button class="nav-link nav-link--btn" id="btn-enable-push" type="button" style="display: none; background: #ffffff; border: 1px solid #CBD5E1; padding: 12px; color: #475569; border-radius: 12px; cursor: pointer; font-weight: 600; margin-top: 10px; align-items: center; justify-content: center; gap: 10px; width: 100%;"><i class="fa-solid fa-bell"></i> Aktifkan Notifikasi</button>
 
+        <button class="nav-link nav-link--btn" id="btn-enable-push" type="button" style="display: none; background: #ffffff; border: 1px solid #CBD5E1; padding: 12px; color: #475569; border-radius: 12px; cursor: pointer; font-weight: 600; margin-top: 10px; align-items: center; justify-content: center; gap: 10px; width: 100%;"><i class="fa-solid fa-bell"></i> Aktifkan Notifikasi</button>
         <button class="logout-btn"><i class="fa-solid fa-power-off"></i> Keluar Sistem</button>
     </aside>
 
     <div class="main-wrapper" id="main-content">
-        
-        <!-- ================= HALAMAN 1: DASHBOARD OVERVIEW ================= -->
+
         <div id="page-dashboard" class="spa-page active-page">
             <section class="card profile-header">
                 <img src="nisa.jpeg" class="profile-img" alt="Foto Faiqotun Nisa">
@@ -260,77 +281,47 @@
                 <h3>Contact Us</h3>
                 <form class="contact-grid">
                     <div class="form-group-row">
-                        <div class="form-group">
-                            <label>Your Name</label>
-                            <input type="text" placeholder="E.g John Doe">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" placeholder="E.g johndoe@mail.com">
-                        </div>
+                        <div class="form-group"><label>Your Name</label><input type="text" placeholder="E.g John Doe"></div>
+                        <div class="form-group"><label>Email</label><input type="email" placeholder="E.g johndoe@mail.com"></div>
                     </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" placeholder="+62 08123456789">
-                    </div>
-                    <div class="form-group">
-                        <label>Questions</label>
-                        <textarea placeholder="Input your questions" rows="3"></textarea>
-                    </div>
+                    <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+62 08123456789"></div>
+                    <div class="form-group"><label>Questions</label><textarea placeholder="Input your questions" rows="3"></textarea></div>
                     <button type="submit" class="btn-submit">Submit</button>
                 </form>
             </section>
         </div>
 
-        <!-- ================= HALAMAN 2: MANAJEMEN ARTIKEL (INPUT & CAMERA) ================= -->
         <div id="page-tambah-artikel" class="spa-page">
             <section class="card">
                 <h3>Buat Postingan Artikel Baru</h3>
                 <form id="form-artikel">
                     <input type="text" id="input-judul" placeholder="Masukkan Judul Artikel..." required>
                     <textarea id="input-konten" rows="4" placeholder="Tulis isi konten artikel di sini..." required></textarea>
-                    
-                    <!-- Status lokasi (Geolocation API - Praktikum 2) -->
+
                     <p id="geo-status" class="geo-status" aria-live="polite" style="font-size: 0.85rem; margin: -5px 0 15px; color: #64748B; font-weight: 500;"></p>
-                    
+
                     <div style="margin-bottom: 15px; background: #F8FAFC; padding: 20px; border-radius: 12px; border: 1px dashed #CBD5E1;">
                         <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 10px; color: #475569;">Ambil Gambar via Kamera Web:</label>
-                        
                         <video id="webcam" autoplay playsinline style="width: 100%; max-width: 320px; border-radius: 8px; background: #1E293B; display: block; margin-bottom: 12px;"></video>
-                        
                         <button type="button" id="btn-capture" style="width: auto; background-color: #10B981; padding: 8px 16px; font-size: 12.5px; margin-bottom: 10px; border: none; color: white; border-radius: 6px; cursor: pointer; font-weight: 500;">Jepret Foto (Grayscale)</button>
                         <button type="button" id="btn-retake" style="width: auto; background-color: #F97316; padding: 8px 16px; font-size: 12.5px; margin-bottom: 10px; margin-left: 5px; border: none; color: white; border-radius: 6px; cursor: pointer; font-weight: 500; display: none;">Foto Ulang</button>
-                        
                         <canvas id="canvas-kamera" style="display: none;"></canvas>
                         <img id="preview-foto" alt="Hasil Foto Artikel" style="width: 100%; max-width: 320px; border-radius: 8px; border: 1px solid #CBD5E1; display: none; margin-top: 10px;" />
                     </div>
+
                     <button type="submit" id="save-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Simpan Artikel Ke Sistem</button>
                 </form>
             </section>
         </div>
 
-        <!-- ================= HALAMAN 3: RIWAYAT ARTIKEL (TABEL DATA saja) ================= -->
         <div id="page-riwayat" class="spa-page">
             <section class="card">
                 <h3>Daftar Riwayat Publikasi Artikel</h3>
                 <p style="font-size: 13px; color: #64748B; margin-bottom: 15px;">Berikut adalah database lokal seluruh artikel profile yang telah berhasil diunggah.</p>
-                <table class="article-table">
-                    <thead>
-                        <tr>
-                            <th>JUDUL ARTIKEL</th>
-                            <th>GAMBAR</th>
-                            <th>TANGGAL UNGGAH</th>
-                            <th style="text-align: right;">MANIPULASI DATA</th>
-                        </tr>
-                    </thead>
-                    <tbody id="container-artikel">
-                        <!-- Data dimasukkan oleh skrip JavaScript -->
-                    </tbody>
-                </table>
+                <div id="react-artikel-root"></div>
             </section>
         </div>
 
-        <!-- ================= HALAMAN 4: PETA LOKASI ARTIKEL (Praktikum 5) ================= -->
         <div id="page-peta" class="spa-page">
             <section class="card">
                 <h3>🗺 Peta Penyebaran Artikel</h3>
@@ -341,19 +332,18 @@
 
     </div>
 
-    <!-- ================= MODAL DETAIL ARTIKEL (Praktikum 6) ================= -->
     <div id="modal-detail" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
         <div style="background: white; border-radius: 20px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); position: relative; display: flex; flex-direction: column; gap: 15px;">
             <button id="close-modal-detail" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 28px; cursor: pointer; color: #94A3B8; font-weight: 300;">&times;</button>
             <h2 id="detail-judul" style="border: none; padding: 0; margin: 0; font-size: 22px; color: #1E293B; font-weight: 600;">Judul Artikel</h2>
             <p id="detail-tanggal" style="font-size: 12.5px; color: #64748B; margin-top: -10px; border-bottom: 1px solid #F1F5F9; padding-bottom: 8px;">Tanggal unggah</p>
-            
+
             <div id="detail-foto-container">
                 <img id="detail-foto" src="" style="width: 100%; max-height: 280px; object-fit: cover; border-radius: 12px; display: none;" />
             </div>
-            
+
             <div id="detail-konten" style="font-size: 14px; color: #334155; line-height: 1.6; white-space: pre-line; margin-bottom: 10px;">Konten artikel</div>
-            
+
             <div id="detail-map-section" style="display: none; border-top: 1px solid #F1F5F9; padding-top: 15px;">
                 <h4 style="font-size: 13.5px; font-weight: 600; color: #475569; margin-bottom: 8px;">📍 Lokasi Publikasi</h4>
                 <div id="detail-map-container" style="height: 220px; width: 100%; border-radius: 12px; border: 1px solid #CBD5E1; z-index: 1;"></div>
@@ -362,20 +352,17 @@
     </div>
 
     <script src="script.js"></script>
-    
-    <!-- SCRIPT UTAMA PENGATUR SWITCH SPA & SIKLUS HIDUP WEBCAM -->
+
     <script type="module">
         import { initRouter } from './router.js';
         import { initSeaAnimation } from './animations.js';
         import { startCamera, captureAndFilterFrame, stopCamera } from './camera.js';
         import { getCurrentCoords } from './geo.js';
         import { initPushUI } from './push.js';
-        
-        // --- START INTEGRASI FIREBASE REALTIME DATABASE ---
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
 
-        // Konfigurasi Firebase asli milik CMSNissProfile
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove, update, get } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyBUjvknXxe44yPAD_V8EyXiAMjtXdSIzso",
             authDomain: "cmsnissprofile.firebaseapp.com",
@@ -387,20 +374,14 @@
             measurementId: "G-H0LSYR6GZP"
         };
 
-        // Inisialisasi Firebase & Realtime Database
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        // --- END INTEGRASI FIREBASE REALTIME DATABASE ---
 
         initRouter();
         initSeaAnimation();
         initPushUI();
 
-        // Variabel lokal untuk menyimpan koordinat dan status edit mode
-        let _coords = null;
-        let idArtikelDiedit = null; // Menyimpan ID artikel saat dalam mode edit
-
-        // Registrasi Service Worker di secure context
+        // Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker
@@ -410,69 +391,103 @@
             });
         }
 
-        // =========================================================
-        // FUNGSI FIREBASE 1: SIMPAN DATA / UPDATE FORM KE CLOUD
-        // =========================================================
+        let _coords = null;
+        let idArtikelDiedit = null;
+
+        // Geolocation + webcam lifecycle
+        async function captureLocation() {
+            const statusEl = document.getElementById('geo-status');
+            if (statusEl) {
+                statusEl.textContent = '📍 Mengambil lokasi GPS…';
+                statusEl.style.color = '#64748B';
+            }
+
+            _coords = await getCurrentCoords();
+            window.capturedCoords = _coords;
+
+            if (!statusEl) return;
+            if (_coords) {
+                const { lat, lon } = _coords;
+                statusEl.textContent = `📍 Lokasi terlampir (${lat.toFixed(4)}, ${lon.toFixed(4)})`;
+                statusEl.style.color = '#10B981';
+            } else {
+                statusEl.textContent = '📍 Tanpa lokasi (izin ditolak atau tidak tersedia)';
+                statusEl.style.color = '#F97316';
+            }
+        }
+
+        function siapkanKamera() {
+            const videoElement = document.getElementById('webcam');
+            const canvasElement = document.getElementById('canvas-kamera');
+            const previewImageElement = document.getElementById('preview-foto');
+            const btnCapture = document.getElementById('btn-capture');
+            const btnRetake = document.getElementById('btn-retake');
+
+            const pageAktif = document.getElementById('page-tambah-artikel')?.classList.contains('active-page');
+            if (videoElement && btnCapture && btnRetake && pageAktif) {
+                if (previewImageElement && previewImageElement.style.display === 'block') return;
+                startCamera(videoElement);
+
+                btnCapture.onclick = () => {
+                    captureAndFilterFrame(videoElement, canvasElement, previewImageElement);
+                    videoElement.style.display = 'none';
+                    btnCapture.style.display = 'none';
+                    previewImageElement.style.display = 'block';
+                    btnRetake.style.display = 'inline-block';
+                    captureLocation();
+                };
+
+                btnRetake.onclick = () => {
+                    previewImageElement.style.display = 'none';
+                    btnRetake.style.display = 'none';
+                    videoElement.style.display = 'block';
+                    btnCapture.style.display = 'inline-block';
+                    _coords = null;
+                    window.capturedCoords = null;
+                    const statusEl = document.getElementById('geo-status');
+                    if (statusEl) statusEl.textContent = '';
+                    startCamera(videoElement);
+                };
+            } else {
+                stopCamera();
+            }
+        }
+
+        // Switch page listeners
+        const menuItems = document.querySelectorAll('.nav-item');
+        const pages = document.querySelectorAll('.spa-page');
+
+        menuItems.forEach(item => {
+            if (!item.hasAttribute('data-target')) return;
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                menuItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                const targetPageId = item.getAttribute('data-target');
+                pages.forEach(page => {
+                    page.classList.remove('active-page');
+                    if (page.id === targetPageId) page.classList.add('active-page');
+                });
+
+                // Reset edit mode when leaving form page
+                if (targetPageId !== 'page-tambah-artikel') {
+                    idArtikelDiedit = null;
+                    const saveBtn = document.getElementById('save-btn');
+                    if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Simpan Artikel Ke Sistem`;
+                }
+
+                siapkanKamera();
+                if (targetPageId === 'page-peta') tampilkanPetaCloud();
+            });
+        });
+
+        siapkanKamera();
+
+        // Form submit (create/update)
         const formArtikelCloud = document.getElementById('form-artikel');
         const saveBtn = document.getElementById('save-btn');
-
-        if (formArtikelCloud) {
-            formArtikelCloud.addEventListener('submit', function(e) {
-                e.preventDefault(); 
-
-                const judulVal = document.getElementById('input-judul').value;
-                const kontenVal = document.getElementById('input-konten').value;
-                
-                const imgPreview = document.getElementById('preview-foto');
-                const fotoData = (imgPreview && imgPreview.style.display !== 'none') ? imgPreview.src : "";
-
-                const latVal = _coords ? _coords.lat : null;
-                const lonVal = _coords ? _coords.lon : null;
-
-                if (idArtikelDiedit) {
-                    // --- MODE UPDATE (EDIT DATA) ---
-                    const dataUpdate = {
-                        judul: judulVal,
-                        konten: kontenVal,
-                        tanggal: new Date().toISOString()
-                    };
-
-                    // Update foto dan lokasi hanya jika ada data baru yang dimasukkan/dijepret
-                    if (fotoData) dataUpdate.foto = fotoData;
-                    if (latVal !== null) dataUpdate.lat = latVal;
-                    if (lonVal !== null) dataUpdate.lon = lonVal;
-
-                    update(ref(db, 'artikel/' + idArtikelDiedit), dataUpdate)
-                    .then(() => {
-                        alert("Artikel berhasil diperbarui secara Cloud!");
-                        resetFormKeSemula();
-                    })
-                    .catch((error) => {
-                        alert("Gagal memperbarui artikel cloud.");
-                        console.error(error);
-                    });
-
-                } else {
-                    // --- MODE SIMPAN BARU ---
-                    push(ref(db, 'artikel'), {
-                        judul: judulVal,
-                        konten: kontenVal,
-                        foto: fotoData,
-                        lat: latVal,
-                        lon: lonVal,
-                        tanggal: new Date().toISOString()
-                    })
-                    .then(() => {
-                        alert("Artikel sukses tersimpan secara Cloud di Firebase Realtime Database!");
-                        resetFormKeSemula();
-                    })
-                    .catch((error) => {
-                        alert("Gagal menyimpan ke cloud. Cek koneksi internet.");
-                        console.error("Firebase Error:", error);
-                    });
-                }
-            });
-        }
 
         function resetFormKeSemula() {
             formArtikelCloud.reset();
@@ -480,88 +495,76 @@
             if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Simpan Artikel Ke Sistem`;
 
             const imgPreview = document.getElementById('preview-foto');
-            if(imgPreview) imgPreview.style.display = 'none';
-            
+            if (imgPreview) imgPreview.style.display = 'none';
+
             const videoElement = document.getElementById('webcam');
             const btnCapture = document.getElementById('btn-capture');
             const btnRetake = document.getElementById('btn-retake');
-            if(videoElement) videoElement.style.display = 'block';
-            if(btnCapture) btnCapture.style.display = 'inline-block';
-            if(btnRetake) btnRetake.style.display = 'none';
-            
+            if (videoElement) videoElement.style.display = 'block';
+            if (btnCapture) btnCapture.style.display = 'inline-block';
+            if (btnRetake) btnRetake.style.display = 'none';
+
             _coords = null;
             window.capturedCoords = null;
             const statusEl = document.getElementById('geo-status');
             if (statusEl) statusEl.textContent = '';
-            
+
             siapkanKamera();
         }
 
-        // =========================================================
-        // FUNGSI FIREBASE 2: TAMPILKAN DATA SECARA REALTIME DI TABEL (DENGAN EDIT)
-        // =========================================================
-        const containerArtikelCloud = document.getElementById('container-artikel');
-        if (containerArtikelCloud) {
-            onValue(ref(db, 'artikel'), (snapshot) => {
-                containerArtikelCloud.innerHTML = ""; 
-                
-                if (snapshot.exists()) {
-                    snapshot.forEach((childSnapshot) => {
-                        const key = childSnapshot.key; 
-                        const data = childSnapshot.val();
-                        
-                        const imgTag = data.foto ? `<img src="${data.foto}" style="width: 50px; height: 40px; object-fit: cover; border-radius: 4px;" />` : `<span style="color:#94A3B8; font-size:12px;">Tanpa Foto</span>`;
-                        const geoTag = (data.lat !== null && data.lon !== null) ? `<br><small style="color:#10B981; font-size:10px;">📍 Terlokasi</small>` : '';
+        if (formArtikelCloud) {
+            formArtikelCloud.addEventListener('submit', async function(e) {
+                e.preventDefault();
 
-                        const row = `<tr>
-                            <td>
-                                <strong>${data.judul}</strong>${geoTag}
-                            </td>
-                            <td>${imgTag}</td>
-                            <td>${new Date(data.tanggal).toLocaleDateString('id-ID')}</td>
-                            <td style="text-align: right;">
-                                <button onclick="window.bukaDetailArtikelCloud('${key}')" style="background: #475569; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; cursor: pointer; margin-right: 3px;">Detail</button>
-                                <button onclick="window.pemicuEditArtikelCloud('${key}')" style="background: #F59E0B; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; cursor: pointer; margin-right: 3px;">Edit</button>
-                                <button class="btn-hapus-firebase" data-id="${key}" style="background: none; border: 1px solid #EF4444; color: #EF4444; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; cursor: pointer;">Hapus</button>
-                            </td>
-                        </tr>`;
-                        containerArtikelCloud.innerHTML += row;
-                    });
+                const judulVal = document.getElementById('input-judul').value;
+                const kontenVal = document.getElementById('input-konten').value;
+
+                const imgPreview = document.getElementById('preview-foto');
+                const fotoData = (imgPreview && imgPreview.style.display !== 'none') ? imgPreview.src : "";
+
+                const latVal = _coords ? _coords.lat : null;
+                const lonVal = _coords ? _coords.lon : null;
+
+                if (idArtikelDiedit) {
+                    const dataUpdate = {
+                        judul: judulVal,
+                        konten: kontenVal,
+                        tanggal: new Date().toISOString()
+                    };
+                    if (fotoData) dataUpdate.foto = fotoData;
+                    if (latVal !== null) dataUpdate.lat = latVal;
+                    if (lonVal !== null) dataUpdate.lon = lonVal;
+
+                    await update(ref(db, 'artikel/' + idArtikelDiedit), dataUpdate);
+                    alert("Artikel berhasil diperbarui secara Cloud!");
+                    resetFormKeSemula();
                 } else {
-                    containerArtikelCloud.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #94A3B8; padding: 20px;">Belum ada artikel publikasi di database cloud.</td></tr>`;
-                }
-            });
-
-            // Handler Event Delegation khusus Tombol Hapus berbasis Cloud
-            containerArtikelCloud.addEventListener('click', function(e) {
-                if (e.target.classList.contains('btn-hapus-firebase')) {
-                    const idCloud = e.target.getAttribute('data-id');
-                    if (confirm("Apakah kamu yakin ingin menghapus artikel ini secara permanen dari Cloud Database?")) {
-                        remove(ref(db, 'artikel/' + idCloud))
-                            .then(() => console.log("Artikel terhapus dari Firebase."))
-                            .catch((err) => console.error("Gagal menghapus:", err));
-                    }
+                    await push(ref(db, 'artikel'), {
+                        judul: judulVal,
+                        konten: kontenVal,
+                        foto: fotoData,
+                        lat: latVal,
+                        lon: lonVal,
+                        tanggal: new Date().toISOString()
+                    });
+                    alert("Artikel sukses tersimpan secara Cloud di Firebase Realtime Database!");
+                    resetFormKeSemula();
                 }
             });
         }
 
-        // =========================================================
-        // FUNGSI FIREBASE 2.5: AMBIL DATA CLOUD KE FORM UNTUK DIEDIT
-        // =========================================================
+        // Edit trigger for React table
         window.pemicuEditArtikelCloud = function(id) {
             onValue(ref(db, 'artikel/' + id), (snapshot) => {
                 const item = snapshot.val();
                 if (!item) return;
 
-                // 1. Isikan data lama ke dalam elemen input form
-                document.getElementById('input-judul').value = item.judul;
-                document.getElementById('input-konten').value = item.konten;
-                
-                // Set ID yang sedang dimodifikasi
+                document.getElementById('input-judul').value = item.judul || '';
+                document.getElementById('input-konten').value = item.konten || '';
                 idArtikelDiedit = id;
+
                 if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Perbarui Artikel di Cloud`;
 
-                // Tampilkan preview foto lama jika ada
                 const imgPreview = document.getElementById('preview-foto');
                 const videoElement = document.getElementById('webcam');
                 const btnCapture = document.getElementById('btn-capture');
@@ -575,141 +578,203 @@
                     if (btnRetake) btnRetake.style.display = 'inline-block';
                 }
 
-                // Tampilkan label lokasi lama jika tersedia
                 const statusEl = document.getElementById('geo-status');
-                if (statusEl && item.lat && item.lon) {
+                if (statusEl && item.lat !== null && item.lon !== null) {
                     statusEl.textContent = `📍 Lokasi Tersimpan (${parseFloat(item.lat).toFixed(4)}, ${parseFloat(item.lon).toFixed(4)}) - Lewati jika tidak ingin mengubah`;
                     statusEl.style.color = '#F59E0B';
                 }
 
-                // 2. Alihkan halaman SPA secara otomatis ke tab "Manajemen Artikel"
+                // Switch page to form tab
                 menuItems.forEach(i => i.classList.remove('active'));
                 const menuTambah = document.querySelector('[data-target="page-tambah-artikel"]');
                 if (menuTambah) menuTambah.classList.add('active');
 
                 pages.forEach(page => {
                     page.classList.remove('active-page');
-                    if (page.id === 'page-tambah-artikel') {
-                        page.classList.add('active-page');
-                    }
+                    if (page.id === 'page-tambah-artikel') page.classList.add('active-page');
                 });
 
+                siapkanKamera();
                 alert("Data artikel berhasil dimuat! Silakan ubah teks pada halaman Manajemen Artikel.");
             }, { onlyOnce: true });
         };
 
-        // LOGIKA FILTER SWITCHING HALAMAN INTERNAL
-        const menuItems = document.querySelectorAll('.nav-item');
-        const pages = document.querySelectorAll('.spa-page');
+        // Modal detail
+        let detailMap = null;
 
-        menuItems.forEach(item => {
-            if(item.hasAttribute('data-target')) {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    
-                    const targetPageId = item.getAttribute('data-target');
-                    pages.forEach(page => {
-                        page.classList.remove('active-page');
-                        if(page.id === targetPageId) {
-                            page.classList.add('active-page');
+        window.bukaDetailArtikelCloud = function(id) {
+            onValue(ref(db, 'artikel/' + id), (snapshot) => {
+                const item = snapshot.val();
+                if (!item) return;
+
+                const modal = document.getElementById('modal-detail');
+                modal.style.display = 'flex';
+
+                const judulEl = document.getElementById('detail-judul');
+                if (judulEl) judulEl.textContent = item.judul || '';
+
+                const opsiTanggal = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                const tanggalEl = document.getElementById('detail-tanggal');
+                if (tanggalEl) tanggalEl.textContent = `Diupload pada: ${item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID', opsiTanggal) : '-'}`;
+
+                const img = document.getElementById('detail-foto');
+                if (img) {
+                    if (item.foto) {
+                        img.src = item.foto;
+                        img.style.display = 'block';
+                    } else {
+                        img.style.display = 'none';
+                    }
+                }
+
+                const kontenEl = document.getElementById('detail-konten');
+                if (kontenEl) kontenEl.textContent = item.konten || '';
+
+                const mapSection = document.getElementById('detail-map-section');
+                if (mapSection) {
+                    if (item.lat !== null && item.lon !== null) {
+                        mapSection.style.display = 'block';
+
+                        if (detailMap) {
+                            detailMap.remove();
+                            detailMap = null;
                         }
-                    });
 
-                    // Jika user pindah halaman secara sengaja, reset status edit mode
-                    if (targetPageId !== 'page-tambah-artikel') {
-                        idArtikelDiedit = null;
-                        if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Simpan Artikel Ke Sistem`;
+                        setTimeout(() => {
+                            const detailMapEl = document.getElementById('detail-map-container');
+                            const latVal = parseFloat(item.lat);
+                            const lonVal = parseFloat(item.lon);
+
+                            detailMap = L.map(detailMapEl, { attributionControl: false }).setView([latVal, lonVal], 14);
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(detailMap);
+
+                            const customIcon = L.divIcon({
+                                className: 'map-pin',
+                                html: '<span style="font-size: 1.75rem; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));">📷</span>',
+                                iconSize: [36, 36],
+                                iconAnchor: [18, 36]
+                            });
+
+                            L.marker([latVal, lonVal], { icon: customIcon })
+                                .addTo(detailMap)
+                                .bindPopup(`<strong>${item.judul || ''}</strong>`)
+                                .openPopup();
+
+                            detailMap.invalidateSize();
+                        }, 250);
+                    } else {
+                        mapSection.style.display = 'none';
                     }
+                }
+            }, { onlyOnce: true });
+        };
 
-                    siapkanKamera();
-
-                    if (targetPageId === 'page-peta') {
-                        tampilkanPetaCloud();
-                    }
-                });
+        function closeModal() {
+            document.getElementById('modal-detail').style.display = 'none';
+            if (detailMap) {
+                detailMap.remove();
+                detailMap = null;
             }
+        }
+
+        document.getElementById('close-modal-detail').addEventListener('click', closeModal);
+        document.getElementById('modal-detail').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal-detail')) closeModal();
         });
 
-        // Ambil lokasi Geolocation secara paralel
-        async function captureLocation() {
-            const statusEl = document.getElementById('geo-status');
-            if (statusEl) {
-                statusEl.textContent = '📍 Mengambil lokasi GPS…';
-                statusEl.style.color = '#64748B';
-            }
+        // React table CRUD
+        const { createElement, useEffect, useState } = window.React;
+        const { createRoot } = window.ReactDOM;
 
-            _coords = await getCurrentCoords();
-            window.capturedCoords = _coords; 
+        function ArtikelTable() {
+            const [items, setItems] = useState([]);
 
-            if (!statusEl) return;
-            if (_coords) {
-                const { lat, lon } = _coords;
-                statusEl.textContent = `📍 Lokasi terlampir (${lat.toFixed(4)}, ${lon.toFixed(4)})`;
-                statusEl.style.color = '#10B981'; 
-            } else {
-                statusEl.textContent = '📍 Tanpa lokasi (izin ditolak atau tidak tersedia)';
-                statusEl.style.color = '#F97316'; 
-            }
+            useEffect(() => {
+                const unsub = onValue(ref(db, 'artikel'), (snapshot) => {
+                    const arr = [];
+                    if (snapshot.exists()) {
+                        snapshot.forEach((childSnapshot) => {
+                            arr.push({ id: childSnapshot.key, ...childSnapshot.val() });
+                        });
+                    }
+                    setItems(arr);
+                });
+
+                return () => unsub;
+            }, []);
+
+            const fmtTanggal = (t) => {
+                try {
+                    if (!t) return '-';
+                    return new Date(t).toLocaleDateString('id-ID');
+                } catch { return '-'; }
+            };
+
+            const handleDelete = async (id) => {
+                if (!confirm('Apakah kamu yakin ingin menghapus artikel ini secara permanen dari Cloud Database?')) return;
+                await remove(ref(db, 'artikel/' + id));
+            };
+
+            return (
+                createElement('div', null,
+                    items.length === 0
+                        ? createElement('div', { style: { color: '#94A3B8', padding: '15px 0' } }, 'Belum ada artikel publikasi di database cloud.')
+                        : createElement('table', null,
+                            createElement('thead', null,
+                                createElement('tr', null,
+                                    createElement('th', null, 'JUDUL ARTIKEL'),
+                                    createElement('th', null, 'GAMBAR'),
+                                    createElement('th', null, 'TANGGAL UNGGAH'),
+                                    createElement('th', { style: { textAlign: 'right' } }, 'MANIPULASI DATA')
+                                )
+                            ),
+                            createElement('tbody', null,
+                                items.map((item) => {
+                                    const imgTag = item.foto
+                                        ? createElement('img', { src: item.foto, style: { width: 70, height: 50, objectFit: 'cover', borderRadius: 4, border: '1px solid #ddd' } })
+                                        : createElement('span', { style: { color: '#aaa', fontSize: 12 } }, 'Tanpa Foto');
+
+                                    const geoTag = (item.lat !== null && item.lon !== null)
+                                        ? createElement('div', { style: { color: '#10B981', fontSize: 10, marginTop: 4 } }, '📍 Terlokasi')
+                                        : null;
+
+                                    return createElement('tr', { key: item.id },
+                                        createElement('td', null,
+                                            createElement('strong', { style: { cursor: 'pointer', color: '#475569' }, onClick: () => window.bukaDetailArtikelCloud(item.id) }, item.judul),
+                                            geoTag
+                                        ),
+                                        createElement('td', null, imgTag),
+                                        createElement('td', null, fmtTanggal(item.tanggal)),
+                                        createElement('td', { style: { textAlign: 'right' } },
+                                            createElement('button', {
+                                                style: { background: '#475569', color: 'white', border: 'none', padding: '6px 12px', borderRadius: 6, cursor: 'pointer', fontWeight: 600, marginRight: 8, fontSize: 11.5 },
+                                                onClick: () => window.bukaDetailArtikelCloud(item.id)
+                                            }, 'Detail'),
+                                            createElement('button', {
+                                                style: { background: '#F59E0B', color: 'white', border: 'none', padding: '6px 12px', borderRadius: 6, cursor: 'pointer', fontWeight: 600, marginRight: 8, fontSize: 11.5 },
+                                                onClick: () => window.pemicuEditArtikelCloud(item.id)
+                                            }, 'Edit'),
+                                            createElement('button', {
+                                                style: { background: 'none', border: '1px solid #EF4444', color: '#EF4444', padding: '6px 12px', borderRadius: 6, cursor: 'pointer', fontWeight: 600, fontSize: 11.5 },
+                                                onClick: () => handleDelete(item.id)
+                                            }, 'Hapus')
+                                        )
+                                    );
+                                })
+                            )
+                        )
+                )
+            );
         }
 
-        // LIFECYCLE WEBCAM OTOMATIS
-        function siapkanKamera() {
-            const videoElement = document.getElementById('webcam');
-            const canvasElement = document.getElementById('canvas-kamera');
-            const previewImageElement = document.getElementById('preview-foto');
-            const btnCapture = document.getElementById('btn-capture');
-            const btnRetake = document.getElementById('btn-retake');
-            
-            const tabArtikelAktif = document.getElementById('page-tambah-artikel') && document.getElementById('page-tambah-artikel').classList.contains('active-page');
-
-            if (videoElement && btnCapture && btnRetake && tabArtikelAktif) {
-                // Jangan paksa start camera jika preview foto bawaan edit sedang tampil
-                if (previewImageElement && previewImageElement.style.display === 'block') {
-                    return;
-                }
-                
-                startCamera(videoElement);
-
-                btnCapture.onclick = () => {
-                    captureAndFilterFrame(videoElement, canvasElement, previewImageElement);
-                    videoElement.style.display = 'none';
-                    btnCapture.style.display = 'none';
-                    previewImageElement.style.display = 'block';
-                    btnRetake.style.display = 'inline-block';
-                    
-                    captureLocation();
-                };
-
-                btnRetake.onclick = () => {
-                    previewImageElement.style.display = 'none';
-                    btnRetake.style.display = 'none';
-                    videoElement.style.display = 'block';
-                    btnCapture.style.display = 'inline-block';
-                    
-                    _coords = null;
-                    window.capturedCoords = null;
-                    const statusEl = document.getElementById('geo-status');
-                    if (statusEl) statusEl.textContent = '';
-                    
-                    startCamera(videoElement);
-                };
-            } else {
-                stopCamera();
-            }
+        const rootEl = document.getElementById('react-artikel-root');
+        if (rootEl) {
+            createRoot(rootEl).render(createElement(ArtikelTable));
         }
 
-        // Jalankan saat pertama kali dibuka
-        siapkanKamera();
-
-        // ==========================================
-        // FUNGSI FIREBASE 3: SINKRONISASI MAPS BESAR DENGAN DATA FIREBASE CLOUD
-        // ==========================================
+        // Peta
         let leafletMap = null;
-
-        async function tampilkanPetaCloud() {
+        window.tampilkanPetaCloud = function tampilkanPetaCloud() {
             if (leafletMap) {
                 leafletMap.remove();
                 leafletMap = null;
@@ -719,30 +784,26 @@
             if (!mapEl) return;
 
             leafletMap = L.map(mapEl).setView([-7.7256, 109.0095], 11);
-
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
-                maxZoom: 19,
+                maxZoom: 19
             }).addTo(leafletMap);
 
             onValue(ref(db, 'artikel'), (snapshot) => {
-                if(!snapshot.exists()) return;
+                if (!snapshot.exists()) return;
 
                 const articles = [];
                 snapshot.forEach((childSnapshot) => {
                     articles.push({ id: childSnapshot.key, ...childSnapshot.val() });
                 });
-                
+
                 const located = articles.filter(s => s.lat !== null && s.lon !== null);
-                
                 if (located.length === 0) {
-                    L.popup()
-                        .setLatLng(leafletMap.getCenter())
-                        .setContent('Belum ada artikel cloud dengan lokasi koordinat terlampir.')
-                        .openOn(leafletMap);
+                    L.popup().setLatLng(leafletMap.getCenter()).setContent('Belum ada artikel cloud dengan lokasi koordinat terlampir.').openOn(leafletMap);
                     return;
                 }
 
+                // Cluster sederhana
                 const clusters = [];
                 located.forEach(item => {
                     let addedToCluster = false;
@@ -756,9 +817,7 @@
                             break;
                         }
                     }
-                    if (!addedToCluster) {
-                        clusters.push([item]);
-                    }
+                    if (!addedToCluster) clusters.push([item]);
                 });
 
                 const latLngs = [];
@@ -769,165 +828,55 @@
                         const latVal = parseFloat(item.lat);
                         const lonVal = parseFloat(item.lon);
 
-                        const customIcon = L.divIcon({
-                            className: 'map-pin',
-                            html: '<span style="font-size: 1.75rem; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));">📷</span>',
-                            iconSize: [36, 36],
-                            iconAnchor: [18, 36],
-                            popupAnchor: [0, -34]
-                        });
-
-                        const marker = L.marker([latVal, lonVal], { icon: customIcon }).addTo(leafletMap);
-                        
-                        const popupContent = `
+                        const marker = L.marker([latVal, lonVal]).addTo(leafletMap);
+                        marker.bindPopup(`
                             <div style="width: 180px; font-family: 'Poppins', sans-serif;">
                                 ${item.foto ? `<img src="${item.foto}" style="width:100%; height:100px; object-fit:cover; border-radius:6px;" />` : ''}
                                 <h4 style="margin: 8px 0 4px; font-size:13px; font-weight:600; color:#333;">${item.judul}</h4>
-                                <p style="margin: 0; font-size:11px; color:#666;">${new Date(item.tanggal).toLocaleDateString('id-ID')}</p>
+                                <p style="margin: 0; font-size:11px; color:#666;">${item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID') : ''}</p>
                                 <button onclick="window.bukaDetailArtikelCloud('${item.id}')" style="background: #475569; color: white; border: none; padding: 6px 8px; border-radius: 6px; font-size: 11px; margin-top: 8px; cursor: pointer; width: 100%; font-weight: 500;">Lihat Detail</button>
                             </div>
-                        `;
-                        marker.bindPopup(popupContent);
+                        `);
                         latLngs.push([latVal, lonVal]);
                     } else {
-                        const avgLat = cluster.reduce((sum, item) => sum + parseFloat(item.lat), 0) / cluster.length;
-                        const avgLon = cluster.reduce((sum, item) => sum + parseFloat(item.lon), 0) / cluster.length;
+                        const avgLat = cluster.reduce((sum, it) => sum + parseFloat(it.lat), 0) / cluster.length;
+                        const avgLon = cluster.reduce((sum, it) => sum + parseFloat(it.lon), 0) / cluster.length;
 
                         const clusterIcon = L.divIcon({
                             className: 'map-cluster-pin',
-                            html: `
-                                <div style="background: var(--pink-accent); color: white; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; font-weight: 600; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.25); font-size: 13px;">
-                                    ${cluster.length}
-                                </div>
-                            `,
+                            html: `<div style="background: var(--pink-accent); color: white; border-radius: 50%; width: 42px; height: 42px; display:flex; align-items:center; justify-content:center; font-weight:600; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.25);">${cluster.length}</div>`,
                             iconSize: [42, 42],
                             iconAnchor: [21, 21]
                         });
 
                         const marker = L.marker([avgLat, avgLon], { icon: clusterIcon }).addTo(leafletMap);
-                        
-                        let popupContent = `<div style="width: 200px; max-height: 250px; overflow-y: auto; font-family: 'Poppins', sans-serif;">`;
+                        let popupContent = `<div style="width: 200px; max-height: 250px; overflow-y:auto; font-family: 'Poppins', sans-serif;">`;
                         popupContent += `<h4 style="margin: 0 0 10px; font-size:12px; font-weight:600; color:#64748B; border-bottom:1px solid #eee; padding-bottom:5px;">📂 ${cluster.length} Artikel di area ini</h4>`;
-                        
+
                         cluster.forEach(item => {
                             popupContent += `
-                                <div style="margin-bottom: 8px; display: flex; gap: 8px; align-items: center;">
+                                <div style="margin-bottom: 8px; display:flex; gap:8px; align-items:center;">
                                     ${item.foto ? `<img src="${item.foto}" style="width:40px; height:30px; object-fit:cover; border-radius:4px;" />` : ''}
-                                    <div style="flex-grow: 1;">
-                                        <a href="#" onclick="window.bukaDetailArtikelCloud('${item.id}'); return false;" style="font-weight:600; font-size:11.5px; color:#1E293B; text-decoration:none; display: block; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.judul}</a>
-                                        <div style="font-size:9.5px; color:#94A3B8;">${new Date(item.tanggal).toLocaleDateString('id-ID')}</div>
+                                    <div style="flex-grow:1;">
+                                        <a href="#" onclick="window.bukaDetailArtikelCloud('${item.id}'); return false;" style="font-weight:600; font-size:11.5px; color:#1E293B; text-decoration:none; display:block; max-width:130px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.judul}</a>
+                                        <div style="font-size:9.5px; color:#94A3B8;">${item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID') : ''}</div>
                                     </div>
                                 </div>
                             `;
                         });
+
                         popupContent += `</div>`;
                         marker.bindPopup(popupContent);
                         latLngs.push([avgLat, avgLon]);
                     }
                 });
 
-                if (latLngs.length === 1) {
-                    leafletMap.setView(latLngs[0], 14);
-                } else if (latLngs.length > 1) {
-                    leafletMap.fitBounds(latLngs, { padding: [40, 40] });
-                }
-
+                if (latLngs.length === 1) leafletMap.setView(latLngs[0], 14);
+                else leafletMap.fitBounds(latLngs, { padding: [40, 40] });
                 setTimeout(() => leafletMap.invalidateSize(), 100);
             }, { onlyOnce: true });
-        }
-
-        // ==========================================
-        // FUNGSI FIREBASE 4: MODAL DETAIL ARTIKEL BERBASIS DATA CLOUD
-        // ==========================================
-        let detailMap = null;
-
-        window.bukaDetailArtikelCloud = function(id) {
-            onValue(ref(db, 'artikel/' + id), (snapshot) => {
-                const item = snapshot.val();
-                if (!item) return;
-
-                const modal = document.getElementById('modal-detail');
-                if (modal) modal.style.display = 'flex';
-
-                const judulEl = document.getElementById('detail-judul');
-                if (judulEl) judulEl.textContent = item.judul;
-                
-                const opsiTanggal = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-                const tanggalEl = document.getElementById('detail-tanggal');
-                if (tanggalEl) tanggalEl.textContent = `Diupload pada: ${new Date(item.tanggal).toLocaleDateString('id-ID', opsiTanggal)}`;
-                
-                const img = document.getElementById('detail-foto');
-                if (img) {
-                    if (item.foto) {
-                        img.src = item.foto;
-                        img.style.display = 'block';
-                    } else {
-                        img.style.display = 'none';
-                    }
-                }
-
-                const kontenEl = document.getElementById('detail-konten');
-                if (kontenEl) kontenEl.textContent = item.konten;
-
-                const mapSection = document.getElementById('detail-map-section');
-                if (mapSection) {
-                    if (item.lat !== null && item.lon !== null) {
-                        mapSection.style.display = 'block';
-                        
-                        if (detailMap) {
-                            detailMap.remove();
-                            detailMap = null;
-                        }
-
-                        setTimeout(() => {
-                            const detailMapEl = document.getElementById('detail-map-container');
-                            const latVal = parseFloat(item.lat);
-                            const lonVal = parseFloat(item.lon);
-
-                            if (detailMapEl) {
-                                detailMap = L.map(detailMapEl, { attributionControl: false }).setView([latVal, lonVal], 14);
-                                
-                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                    maxZoom: 19
-                                }).addTo(detailMap);
-
-                                const customIcon = L.divIcon({
-                                    className: 'map-pin',
-                                    html: '<span style="font-size: 1.75rem; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));">📷</span>',
-                                    iconSize: [36, 36],
-                                    iconAnchor: [18, 36]
-                                });
-
-                                L.marker([latVal, lonVal], { icon: customIcon })
-                                    .addTo(detailMap)
-                                    .bindPopup(`<strong>${item.judul}</strong>`)
-                                    .openPopup();
-
-                                detailMap.invalidateSize();
-                            }
-                        }, 250);
-                    } else {
-                        mapSection.style.display = 'none';
-                    }
-                }
-            }, { onlyOnce: true });
         };
-
-        // Event listener menutup modal detail
-        document.getElementById('close-modal-detail').addEventListener('click', closeModal);
-        document.getElementById('modal-detail').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('modal-detail')) {
-                closeModal();
-            }
-        });
-
-        function closeModal() {
-            document.getElementById('modal-detail').style.display = 'none';
-            if (detailMap) {
-                detailMap.remove();
-                detailMap = null;
-            }
-        }
     </script>
 </body>
 </html>
+
