@@ -1,158 +1,128 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profil Faiqotun Nisa - Portal</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Leaflet.js CSS & JS (Tugas Pertemuan 12) -->
+
+    <!-- Leaflet.js CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* CSS OVERRIDE: Memaksa Layout Menjadi Landscape dan Mengusir Warna Pink */
-        :root {
-            --primary-silver: #475569 !important;
-            --dark-slate: #1E293B !important;
-            --bg-silver-light: #F4F6F9 !important;
-            --border-silver: #E2E8F0 !important;
-        }
 
-        /* Memaksa background body mengikuti warna CMS */
-        body { 
-            background-color: #F4F6F9 !important; 
-            background: #F4F6F9 !important;
+    <!-- Main CSS (top-level) -->
+    <link rel="stylesheet" href="../style.css" />
+
+    <style>
+        /* Minimal override agar konsisten dengan desain CMS */
+        body {
+            background-color: #F4F6F9 !important;
             color: #1E293B !important;
             padding: 40px 20px !important;
         }
 
-        /* KONTEN UTAMA MELEBAR (LANDSCAPE) */
-        main {
-            max-width: 1200px !important; 
-            margin: 60px auto 0 auto !important;
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 25px !important;
-        }
+        main { max-width: 1200px; margin: 60px auto 0 auto; display: flex; flex-direction: column; gap: 25px; }
 
-        /* Tombol Navigasi Atas */
         .btn-nav-left {
-            position: fixed; top: 20px; left: 20px; 
-            background: #64748B !important; color: white !important; text-decoration: none !important; 
-            padding: 10px 20px !important; border-radius: 8px !important; font-weight: bold !important; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important; 
-            display: flex !important; align-items: center !important; gap: 8px !important; font-size: 14px !important; 
-            z-index: 1001 !important; transition: 0.2s;
+            position: fixed; top: 20px; left: 20px;
+            background: #64748B; color: white; text-decoration: none;
+            padding: 10px 20px; border-radius: 8px;
+            font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 8px; font-size: 14px;
+            z-index: 1001; transition: 0.2s;
         }
-        .btn-nav-left:hover { background: #475569 !important; transform: translateX(-3px); }
+        .btn-nav-left:hover { background: #475569; transform: translateX(-3px); }
 
         .btn-nav-right {
-            position: fixed; top: 20px; right: 20px; 
-            background: #EF4444 !important; color: white !important; border: none !important; 
-            padding: 10px 20px !important; border-radius: 8px !important; cursor: pointer !important; 
-            font-weight: bold !important; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2) !important; 
-            font-size: 14px !important; z-index: 1001 !important;
+            position: fixed; top: 20px; right: 20px;
+            background: #EF4444; color: white; border: none;
+            padding: 10px 20px; border-radius: 8px;
+            cursor: pointer; font-weight: bold;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+            font-size: 14px; z-index: 1001;
         }
 
-        /* MEROMBAK KARTU PROFIL UTAMA */
         .card-profile {
-            background: #ffffff !important; 
-            padding: 35px !important; 
-            border-radius: 20px !important; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04) !important; 
-            border: 1px solid #E2E8F0 !important;
-            display: block !important;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid #E2E8F0;
         }
 
         .profile-header-block {
-            display: flex !important; gap: 40px !important; align-items: center !important; 
-            border-left: 6px solid #475569 !important; /* Border samping ganti jadi Abu Slate */
-            padding-left: 25px !important;
-        }
-        .profile-header-block h1 { color: #0F172A !important; font-size: 28px !important; font-weight: 600 !important; }
-        .profile-header-block img { 
-            width: 130px !important; height: 130px !important; border-radius: 50% !important; 
-            border: 4px solid white !important; box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important; 
-            object-fit: cover !important; flex-shrink: 0 !important;
+            display: flex; gap: 40px; align-items: center;
+            border-left: 6px solid #475569;
+            padding-left: 25px;
         }
 
-        /* PENGATURAN TEKS AGAR MUNCUL JELAS & BERWARNA GELAP */
-        p, span, li, td, th, label {
-            color: #334155 !important;
-            font-size: 14.5px !important;
-            line-height: 1.7 !important;
+        .profile-header-block h1 { color: #0F172A; font-size: 28px; font-weight: 600; }
+        .profile-header-block img {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            object-fit: cover; flex-shrink: 0;
         }
 
-        /* MEMATIKAN ATURAN PINK FIRST-LETTER DARI STYLE.CSS LAMA */
-        p::first-letter, li::first-letter, div::first-letter, span::first-letter, a::first-letter {
-            color: inherit !important;
-            font-size: inherit !important;
-            font-weight: inherit !important;
-            background: none !important;
+        p, span, li, td, th, label { color: #334155; font-size: 14.5px; line-height: 1.7; }
+
+        h2 {
+            color: #334155;
+            margin-top: 5px; margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #F1F5F9;
+            padding-bottom: 8px;
+            font-weight: 600;
         }
 
-        h2 { 
-            color: #334155 !important; 
-            margin-top: 5px !important; margin-bottom: 15px !important; 
-            font-size: 18px !important; border-bottom: 2px solid #F1F5F9 !important; 
-            padding-bottom: 8px !important; font-weight: 600 !important; 
-        }
-
-        /* MEMPAKSA STRUKTUR GRID MENJADI 3 KOLOM MENYAMPING (LANDSCAPE) */
         .landscape-grid {
-            display: grid !important;
-            grid-template-columns: 1fr 1fr 1fr !important; /* Membagi halaman jadi 3 kolom horizontal */
-            gap: 25px !important;
-            width: 100% !important;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            width: 100%;
         }
 
-        /* Membersihkan Kotak Hobbies Lama yang Berwarna Pink/Biru */
-        .landscape-grid .card-profile div, 
-        .landscape-grid .card-profile li {
-            border: none !important;
-            box-shadow: none !important;
-            background: transparent !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            display: list-item !important; /* Mengembalikan bentuk list normal */
+        ul { padding-left: 22px; margin-top: 10px; display: block; }
+        ul li { margin-bottom: 8px; color: #334155; list-style-type: disc; }
+        ol { margin-left: 20px; }
+        ol li { color: #334155; margin-bottom: 8px; list-style-type: decimal; }
+        ul li a { color: #2563EB; text-decoration: none; font-weight: 500; }
+
+        .fav-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .fav-table th, .fav-table td { padding: 12px; border-bottom: 1px solid #F1F5F9; text-align: left; background: transparent; }
+        .fav-table th { background: #F8FAFC; color: #475569; font-weight: 600; }
+
+        .contact-form { display: flex; flex-direction: column; gap: 15px; }
+        .form-group-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 13px; font-weight: 600; color: #475569; }
+        .form-group input, .form-group textarea {
+            padding: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 13.5px;
+            background: #FAFAFA;
+            outline: none;
+            color: #1E293B;
         }
 
-        ul, ol { padding-left: 22px !important; margin-top: 10px !important; display: block !important; }
-        ul li, ol li { margin-bottom: 8px !important; color: #334155 !important; list-style-type: disc !important; }
-        ol li { list-style-type: decimal !important; }
-        ul li a { color: #2563EB !important; text-decoration: none !important; font-weight: 500 !important; }
-
-        /* Tabel Favorites Kontemporer */
-        .fav-table { width: 100% !important; border-collapse: collapse !important; margin-top: 10px !important; border: none !important; }
-        .fav-table th, .fav-table td { padding: 12px !important; border-bottom: 1px solid #F1F5F9 !important; text-align: left !important; background: transparent !important; }
-        .fav-table th { background: #F8FAFC !important; color: #475569 !important; font-weight: 600 !important; }
-
-        /* Form Contact Us */
-        .contact-form { display: flex !important; flex-direction: column !important; gap: 15px !important; }
-        .form-group-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 15px !important; }
-        .form-group { display: flex !important; flex-direction: column !important; gap: 6px !important; }
-        .form-group label { font-size: 13px !important; font-weight: 600 !important; color: #475569 !important; }
-        .form-group input, .form-group textarea { padding: 12px !important; border: 1px solid #E2E8F0 !important; border-radius: 10px !important; font-size: 13.5px !important; background: #FAFAFA !important; outline: none !important; color: #1E293B !important; }
-        
-        /* OVERRIDE TOMBOL SUBMIT: GANTI DARI PINK KE SILVER SLATE GELAP */
-        .btn-submit { 
-            background: #334155 !important; 
-            color: #ffffff !important; 
-            border: none !important; 
-            padding: 12px 40px !important; 
-            border-radius: 10px !important; 
-            font-weight: 600 !important; 
-            font-size: 13.5px !important; 
-            cursor: pointer !important; 
-            transition: 0.2s !important; 
-            align-self: flex-start !important;
-            box-shadow: 0 4px 10px rgba(51, 65, 85, 0.2) !important;
+        .btn-submit {
+            background: #334155;
+            color: #ffffff;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: 0.2s;
+            align-self: flex-start;
+            box-shadow: 0 4px 10px rgba(51, 65, 85, 0.2);
         }
-        .btn-submit:hover { background: #1E293B !important; }
+        .btn-submit:hover { background: #1E293B; }
 
-        /* Peta & Pin Styling */
         .map-pin {
             display: grid;
             place-items: center;
@@ -160,7 +130,7 @@
             border: none;
         }
         .map-pin__emoji {
-            font-size: 1.75rem;
+            font-size: 2rem;
             filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
         }
         .map-cluster-pin {
@@ -171,31 +141,30 @@
     </style>
 </head>
 <body>
-
     <a href="../index.html" class="btn-nav-left">
         <i class="fa-solid fa-arrow-left"></i> Kembali ke CMS
     </a>
 
-    <button onclick="logout()" class="btn-nav-right">
+    <button onclick="logout()" class="btn-nav-right" type="button">
         <i class="fa-solid fa-power-off"></i> Logout
     </button>
 
     <main>
         <section class="card-profile profile-header-block">
-            <img src="assets/saya.jpeg" alt="Foto Profil">
+            <img src="assets/saya.jpeg" alt="Foto Profil" />
             <div>
                 <h1>Faiqotun Nisa</h1>
                 <p style="margin-bottom: 10px;">
-                    Saya adalah seorang mahasiswa <strong>Informatika</strong> berusia 20 tahun yang berdomisili di Cilacap. Saat ini, saya fokus mengembangkan keahlian di bidang <em>analisis data</em> dan pengembangan web guna mempersiapkan diri menjadi seorang Data Analyst profesional di masa depan.
+                    Saya adalah seorang mahasiswa <strong>Informatika</strong> berusia 20 tahun yang berdomisili di Cilacap.
+                    Saat ini, saya fokus mengembangkan keahlian di bidang <em>analisis data</em> dan pengembangan web.
                 </p>
                 <p>
-                    Selain fokus IT, saya juga aktif mengembangkan keahlian di bidang <em>bahasa</em> terutama bahasa Inggris, dengan mengikuti berbagai pelatihan, kursus, dan kelas penunjang percakapan (*speaking*).
+                    Selain fokus IT, saya juga aktif mengembangkan keahlian di bidang <em>bahasa</em> terutama bahasa Inggris.
                 </p>
             </div>
         </section>
 
         <div class="landscape-grid">
-            
             <section class="card-profile">
                 <h2>Hobbies</h2>
                 <ul>
@@ -203,7 +172,7 @@
                     <li><a href="#">Menulis karya fiksi AU dan Novel</a></li>
                     <li><a href="#">Memasak</a></li>
                     <li><a href="#">Studi Bahasa Inggris Mandiri</a></li>
-                 </ul>
+                </ul>
             </section>
 
             <section class="card-profile">
@@ -234,17 +203,17 @@
             </section>
         </div>
 
-        <!-- Tugas Pertemuan 12 - Integrasi Halaman Profile Pribadi dengan Map Location -->
         <section class="card-profile">
             <h2><i class="fa-solid fa-map-location-dot"></i> Peta Lokasi Domisili & Publikasi</h2>
-            <p style="margin-bottom: 15px; font-size: 13.5px; color: #475569;">Peta interaktif wilayah Kabupaten Cilacap (Domisili Faiqotun Nisa) dan titik publikasi artikel di sekitarnya.</p>
+            <p style="margin-bottom: 15px; font-size: 13.5px; color: #475569;">
+                Peta interaktif wilayah Kabupaten Cilacap dan titik publikasi artikel.
+            </p>
             <div id="profile-map" style="height: 350px; width: 100%; border-radius: 12px; border: 1px solid #CBD5E1; z-index: 1;"></div>
         </section>
 
         <section id="cms-blog" class="card-profile">
             <h2>Update Artikel Terbaru</h2>
-            <div id="display-articles">
-                </div>
+            <div id="display-articles"></div>
         </section>
 
         <section class="card-profile">
@@ -253,38 +222,209 @@
                 <div class="form-group-row">
                     <div class="form-group">
                         <label>Your Name</label>
-                        <input type="text" placeholder="E.g John Doe">
+                        <input type="text" placeholder="E.g John Doe" />
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" placeholder="E.g johndoe@mail.com">
+                        <input type="email" placeholder="E.g johndoe@mail.com" />
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="tel" placeholder="+62 08123456789">
+                    <input type="tel" placeholder="+62 08123456789" />
                 </div>
+
                 <div class="form-group">
                     <label>Questions</label>
                     <textarea placeholder="Input your questions" rows="3"></textarea>
                 </div>
+
                 <button type="submit" class="btn-submit">Submit Message</button>
             </form>
         </section>
 
-        <div style="text-align: center; margin: 20px 0;">
+        <div style="text-align:center; margin: 20px 0;">
             <p style="color: gray; font-size: 13px; margin-bottom: 10px;">Mode Administrator:</p>
-            <a href="../index.html" style="display: inline-block; color: #475569; text-decoration: none; font-weight: bold; border: 2px solid #475569; padding: 10px 25px; border-radius: 10px; transition: 0.3s; font-size: 14px;">
+            <a href="../index.html" style="display:inline-block; color:#475569; text-decoration:none; font-weight:bold; border:2px solid #475569; padding:10px 25px; border-radius:10px; transition:0.3s; font-size:14px;">
                 <i class="fa-solid fa-sliders"></i> Kelola Artikel (CMS Dashboard)
             </a>
         </div>
     </main>
 
-    <script src="script.js"></script>
-    
+    <script src="../script.js"></script>
+
+    <script type="module">
+        // Service: tampilan artikel & peta dari Firebase (tanpa fetch backend Railway)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+        import {
+            getDatabase,
+            ref,
+            onValue
+        } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUjvknXxe44yPAD_V8EyXiAMjtXdSIzso",
+            authDomain: "cmsnissprofile.firebaseapp.com",
+            databaseURL: "https://cmsnissprofile-default-rtdb.firebaseio.com",
+            projectId: "cmsnissprofile",
+            storageBucket: "cmsnissprofile.firebasestorage.app",
+            messagingSenderId: "1006087990350",
+            appId: "1:1006087990350:web:76eff35a29a68dc4c9a71f",
+            measurementId: "G-H0LSYR6GZP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        function formatTanggal(t) {
+            if (!t) return '-';
+            try {
+                return new Date(t).toLocaleDateString('id-ID');
+            } catch {
+                return '-';
+            }
+        }
+
+        function renderArtikelTerbaru(items) {
+            const container = document.getElementById('display-articles');
+            if (!container) return;
+
+            if (!items || items.length === 0) {
+                container.innerHTML = "<p style='color: #475569; font-size: 13.5px;'>Belum ada artikel terbaru.</p>";
+                return;
+            }
+
+            // Urutkan terbaru berdasarkan tanggal (desc)
+            const sorted = [...items].sort((a, b) => (b.tanggal || '').localeCompare(a.tanggal || ''));
+            const latest = sorted.slice(0, 6);
+
+            container.innerHTML = latest.map(item => {
+                const fotoHTML = item.foto
+                    ? `<img src="${item.foto}" style="width: 100%; max-height: 170px; object-fit: cover; border-radius: 10px; border: 1px solid #E2E8F0; margin-bottom: 10px;" />`
+                    : '';
+
+                return `
+                    <div style="background:#ffffff; padding: 16px; border-radius: 14px; border: 1px solid #E2E8F0; box-shadow: 0 4px 18px rgba(0,0,0,0.03); margin-bottom: 12px;">
+                        ${fotoHTML}
+                        <h3 style="color:#475569; margin-top:0; font-size: 15.5px; font-weight: 700;">${item.judul || ''}</h3>
+                        <div style="font-size: 13px; color: #334155; line-height: 1.6; white-space: pre-line; max-height: 120px; overflow: hidden;">${item.konten || ''}</div>
+                        <div style="margin-top: 10px; font-size: 12px; color: #64748B;">Diterbitkan: ${formatTanggal(item.tanggal)}</div>
+                        <div style="margin-top: 10px; display:flex; justify-content:flex-end;">
+                            <button onclick="window.location.href='../index.html'" style="background:#475569; color:white; border:none; padding: 8px 12px; border-radius: 8px; cursor:pointer; font-weight:700; font-size: 12.5px;">
+                                Lihat di CMS
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function initProfileMap() {
+            const mapEl = document.getElementById('profile-map');
+            if (!mapEl) return null;
+
+            const defaultLat = -7.7256;
+            const defaultLon = 109.0095;
+
+            const map = L.map(mapEl).setView([defaultLat, defaultLon], 11);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Marker domisili
+            const domicileIcon = L.divIcon({
+                className: 'map-pin',
+                html: '<span style="font-size: 2rem; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));">📍</span>',
+                iconSize: [36, 36],
+                iconAnchor: [18, 36],
+                popupAnchor: [0, -34]
+            });
+
+            L.marker([defaultLat, defaultLon], { icon: domicileIcon })
+                .addTo(map)
+                .bindPopup('<strong>Faiqotun Nisa</strong><br>Domisili: Cilacap, Jawa Tengah')
+                .openPopup();
+
+            return map;
+        }
+
+        function clearMapMarkers(map) {
+            if (!map) return;
+            map.eachLayer(layer => {
+                // Hanya hapus marker (Leaflet marker punya getLatLng)
+                if (layer && typeof layer.getLatLng === 'function') {
+                    map.removeLayer(layer);
+                }
+            });
+        }
+
+        let profileMap = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            profileMap = initProfileMap();
+
+            // Listener: artikel dari Firebase
+            onValue(ref(db, 'artikel'), (snapshot) => {
+                const items = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach(child => {
+                        items.push({ id: child.key, ...child.val() });
+                    });
+                }
+
+                renderArtikelTerbaru(items);
+
+                if (!profileMap) return;
+
+                // Refresh marker peta artikel
+                clearMapMarkers(profileMap);
+
+                const defaultLat = -7.7256;
+                const defaultLon = 109.0095;
+
+                const located = items.filter(s => s.lat !== null && s.lon !== null);
+                const latLngs = [[defaultLat, defaultLon]];
+
+                located.forEach(item => {
+                    const latVal = parseFloat(item.lat);
+                    const lonVal = parseFloat(item.lon);
+                    if (Number.isNaN(latVal) || Number.isNaN(lonVal)) return;
+
+                    const articleIcon = L.divIcon({
+                        className: 'map-pin',
+                        html: '<span style="font-size: 1.75rem; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));">📷</span>',
+                        iconSize: [36, 36],
+                        iconAnchor: [18, 36],
+                        popupAnchor: [0, -34]
+                    });
+
+                    const marker = L.marker([latVal, lonVal], { icon: articleIcon }).addTo(profileMap);
+
+                    const popupContent = `
+                        <div style="width: 180px; font-family: 'Poppins', sans-serif;">
+                            ${item.foto ? `<img src="${item.foto}" style="width:100%; height:80px; object-fit:cover; border-radius:6px; margin-bottom: 5px; border: 1px solid #ddd;" />` : ''}
+                            <h4 style="margin: 5px 0 2px; font-size:12px; font-weight:700; color:#333;">${item.judul || ''}</h4>
+                            <div style="margin: 0; font-size:10px; color:#666;">Diterbitkan: ${formatTanggal(item.tanggal)}</div>
+                        </div>
+                    `;
+
+                    marker.bindPopup(popupContent);
+                    latLngs.push([latVal, lonVal]);
+                });
+
+                if (latLngs.length > 1) {
+                    profileMap.fitBounds(latLngs, { padding: [40, 40] });
+                }
+            });
+        });
+    </script>
+
     <script type="module">
         import { initSeaAnimation } from '../animations.js';
         initSeaAnimation();
     </script>
 </body>
 </html>
+
